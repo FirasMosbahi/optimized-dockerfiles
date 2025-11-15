@@ -26,7 +26,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./react-vite
-          file: ./rect+vite/Dockerfile
+          context: ./react
+          file: ./react/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:latest, ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:${{ github.sha }}
