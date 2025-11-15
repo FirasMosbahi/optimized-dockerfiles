@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.gitignore
+Dockerfile
+npm-debug.log
+*.md
+.vscode
+.env
+.dockerignore
+nginx-config
+Dockerfile.basic
+eslint.config.js
+README.md
