@@ -35,6 +35,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./react
-          file: ./react/Dockerfile.no-optimization
+          file: ./react/Dockerfile.basic
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:non-optimized-latest, ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:non-optimized-${{ github.sha }}
