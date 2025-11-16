@@ -17,6 +17,7 @@ The purpose is to provide learning resources and ready-to-use examples that demo
 
 ## 📂 Repository Structure
 
+```txt
 optimized-dockerfiles/
 │
 ├── react-vite/
@@ -29,7 +30,7 @@ optimized-dockerfiles/
 ├── python-flask/ -> (upcoming)
 ├── go-service/ -> (upcoming)
 └── ...
-
+```
 
 Each subfolder represents a **standalone example project**, with:
 
@@ -42,14 +43,32 @@ Each subfolder represents a **standalone example project**, with:
 
 ## 🛠️ Technologies Covered (Current & Upcoming)
 
-| Category | Stack | Status |
-|---------|--------|--------|
-| Frontend | React + Vite | ✅ DONE |
-| Backend | Node.js (Express/Fastify) | 🔜 Coming soon |
-| Backend | Go | 🔜 Coming soon |
-| Backend | Python Flask | 🔜 Coming soon |
-| Databases | MongoDB/Postgres containerization patterns | 🔜 Coming soon |
-| Deployment | Nginx, Traefik, Caddy | 🔜 Coming soon |
+# 📌 Project Progress Tracker
+
+| Category      | Stack / Technology                | Status         |
+|---------------|------------------------------------|----------------|
+| **Frontend**  | React + Vite                       | ✅ DONE        |
+| **Frontend**  | Next.js (App Router + SSR)         | ✅ DONE        |
+| **Frontend**  | Angular (CSR + SSR)                | ✅ DONE        |
+| **Frontend**  | Vue 3 + Vite                       | 🔜 Coming soon |
+| **Frontend**  | SvelteKit                          | 🔜 Coming soon |
+| **Frontend**  | Astro (Partial SSR / Islands)      | 🔜 Coming soon |
+|               |                                    |                |
+| **Backend**   | Node.js (Express)                  | 🔜 Coming soon |
+| **Backend**   | Node.js (Fastify)                  | 🔜 Coming soon |
+| **Backend**   | Go (Fiber / Gin)                   | 🔜 Coming soon |
+| **Backend**   | Python (Flask)                     | 🔜 Coming soon |
+| **Backend**   | Python (FastAPI)                   | 🔜 Coming soon |
+| **Backend**   | Rust (Axum / Actix)                | 🔜 Coming soon |
+|               |                                    |                |
+| **DevOps**    | Production-grade Nginx configs      | ✅ DONE        |
+| **DevOps**    | Optimized Dockerfiles               | ✅ DONE        |
+| **DevOps**    | Non-optimized comparison builds     | ✅ DONE        |
+| **DevOps**    | CI/CD (GitHub Actions)              | 🔜 Coming soon |
+| **DevOps**    | GitHub Pages documentation site     | 🔄 In Progress |
+| **DevOps**    | Repo Logo + Badges                  | 🔄 In Progress |
+| **DevOps**    | Wiki pages (Examples & Tutorials)   | 🔄 In Progress |
+
 
 ---
 
@@ -57,21 +76,26 @@ Each subfolder represents a **standalone example project**, with:
 
 This repository follows production-grade principles:
 
-### ✔ Multi-Stage Builds  
+### ✔ Multi-Stage Builds
+
 Reduce final image size by separating build and runtime stages.
 
 ### ✔ Minimal Base Images  
+
 Using `alpine`, `scratch`, or distroless where applicable.
 
-### ✔ Static Asset Serving  
+### ✔ Static Asset Serving 
+
 Frontend projects use **Nginx** instead of `vite preview`.
 
 ### ✔ Security Hardening  
+
 - Non-root users where possible  
 - Read-only filesystem  
 - Minimal OS footprint  
 
 ### ✔ CI/CD Friendly  
+
 All examples are built to:
 
 - Be cache efficient  

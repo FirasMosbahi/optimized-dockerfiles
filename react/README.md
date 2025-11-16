@@ -16,14 +16,15 @@ It also includes a **non-optimized version** for comparison to help understand t
 
 ## 📁 Files in This Project
 
-react-vite/
+```txt
+react/
 │
 ├── Dockerfile -> Optimized multi-stage production Dockerfile
 ├── Dockerfile.basic -> Simple non-optimized Dockerfile (for comparison)
 ├── nginx.conf -> Nginx static file configuration
 ├── dist/ -> Build output (generated)
 └── src/ -> React source code
-
+```
 
 ---
 

@@ -1,0 +1,14 @@
+<h2>Your Courses 📚</h2>
+
+<ul class="course-list">
+  <li *ngFor="let c of courses" class="course-card">
+    <h3>{{ c.title }}</h3>
+    <p>Level: {{ c.level }}</p>
+
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="c.progress"></div>
+    </div>
+
+    <small>{{ c.progress }}% complete</small>
+  </li>
+</ul>

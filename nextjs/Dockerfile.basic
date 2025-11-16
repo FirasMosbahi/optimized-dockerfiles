@@ -1,0 +1,19 @@
+# ❌ Not optimized — single stage, heavy image
+FROM node:20
+
+# Working directory
+WORKDIR /app
+
+# Copy everything (❌ no .dockerignore handling)
+COPY . .
+
+# Install dependencies (❌ no cache layers)
+RUN npm install
+
+# Build the Next.js app (still okay)
+RUN npm run build
+
+# ❌ Run the Next.js server directly in production
+# This uses the full Node image with no optimization
+EXPOSE 3000
+CMD ["npm", "run", "start"]

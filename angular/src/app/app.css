@@ -1,0 +1,23 @@
+.navbar {
+  display: flex;
+  gap: 20px;
+  padding: 16px;
+  background: #111827;
+}
+
+.navbar a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar a.active {
+  color: #f97316;
+  border-bottom: 2px solid #f97316;
+}
+
+.content {
+  padding: 24px;
+  max-width: 900px;
+  margin: auto;
+}

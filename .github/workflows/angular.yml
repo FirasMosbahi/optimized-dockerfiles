@@ -1,13 +1,12 @@
-name: Publish React+Vite to Docker Hub
+name: Build Angular Docker Image
 
 on:
   push:
     paths:
-      - "react/**"
+      - "angular/**"
       - "!**.md"
     branches:
-      - main    # change if your main branch is different
-  workflow_dispatch: # allow manual trigger
+      - main
 
 jobs:
   push-to-dockerhub:
@@ -29,15 +28,15 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./react
-          file: ./react/Dockerfile
+          context: ./angular
+          file: ./angular/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:react-latest, ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:react-${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:angular-latest, ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:angular-${{ github.sha }}
 
       - name: Build and push non optimized Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./react
-          file: ./react/Dockerfile.basic
+          context: ./angular
+          file: ./angular/Dockerfile.basic
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:react-non-optimized-latest, ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:react-non-optimized-${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:angular-non-optimized-latest, ${{ secrets.DOCKERHUB_USERNAME }}/learning-tracker:angular-non-optimized-${{ github.sha }}      

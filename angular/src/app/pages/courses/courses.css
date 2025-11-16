@@ -1,0 +1,26 @@
+.course-list {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 16px;
+}
+
+.course-card {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #22c55e;
+}
