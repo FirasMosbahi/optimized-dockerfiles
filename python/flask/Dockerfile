@@ -5,8 +5,8 @@ FROM python:3.14-slim AS builder
 # Set workdir
 WORKDIR /app
 
-# Install Poetry
-RUN pip install --no-cache-dir poetry
+# Install Poetry and export plugin
+RUN pip install --no-cache-dir poetry poetry-plugin-export
 
 # Copy only dependency files first (for caching)
 COPY pyproject.toml poetry.lock* ./
