@@ -1,0 +1,20 @@
+# Dockerfile.basic (non-optimized)
+FROM node:20
+
+WORKDIR /app
+
+# Copy everything
+COPY . .
+
+# Install ALL dependencies (including dev)
+RUN npm install
+
+# Set environment
+ENV NODE_ENV=development
+ENV PORT=3000
+
+# Expose port
+EXPOSE 3000
+
+# Run with nodemon for development
+CMD ["npm", "run", "dev"]

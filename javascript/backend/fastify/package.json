@@ -1,0 +1,23 @@
+{
+  "name": "fastify-demo",
+  "version": "1.0.0",
+  "description": "Fastify REST API with optimized Docker setup",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": ["fastify", "rest-api", "docker", "nodejs"],
+  "author": "Firas Mosbahi",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^4.25.2",
+    "@fastify/cors": "^8.5.0",
+    "@fastify/helmet": "^11.1.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
