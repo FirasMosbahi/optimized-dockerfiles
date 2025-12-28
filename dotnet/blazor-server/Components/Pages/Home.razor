@@ -1,0 +1,47 @@
+@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Blazor Server Demo</PageTitle>
+
+<div style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+    <h1>Hello from Blazor Server!</h1>
+
+    <div style="margin: 2rem 0; padding: 1.5rem; background: #f0f0f0; border-radius: 8px;">
+        <h2>Framework Information</h2>
+        <p><strong>Framework:</strong> Blazor Server</p>
+        <p><strong>Status:</strong> @status</p>
+        <p><strong>Counter:</strong> @currentCount</p>
+        <p><strong>Last Updated:</strong> @DateTime.Now.ToString("HH:mm:ss")</p>
+    </div>
+
+    <div style="margin: 2rem 0;">
+        <button @onclick="IncrementCount" style="padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 4px;">
+            Click me
+        </button>
+        <button @onclick="ResetCount" style="padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; margin-left: 1rem; background: #666; color: white; border: none; border-radius: 4px;">
+            Reset
+        </button>
+    </div>
+
+    <div style="margin: 2rem 0;">
+        <h3>API Endpoints</h3>
+        <ul>
+            <li><code>/health</code> - Health check endpoint</li>
+        </ul>
+    </div>
+</div>
+
+@code {
+    private int currentCount = 0;
+    private string status = "running";
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private void ResetCount()
+    {
+        currentCount = 0;
+    }
+}

@@ -1,0 +1,18 @@
+# ==============================================================================
+# Basic (Non-Optimized) Dockerfile
+# ==============================================================================
+FROM ruby:3.3.0
+
+WORKDIR /app
+
+# Copy everything
+COPY . .
+
+# Install gems
+RUN bundle install
+
+EXPOSE 3000
+
+ENV RAILS_ENV=production
+
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]

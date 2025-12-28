@@ -1,0 +1,38 @@
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+README.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+log/
+tmp/
+
+# Docker
+Dockerfile
+Dockerfile.basic
+.dockerignore
+
+# Test
+test/
+spec/
+coverage/
+
+# Development
+.env
+.env.local

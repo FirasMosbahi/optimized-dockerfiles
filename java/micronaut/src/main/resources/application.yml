@@ -1,0 +1,19 @@
+micronaut:
+  application:
+    name: micronaut-demo
+  server:
+    port: 8080
+    host: 0.0.0.0
+
+endpoints:
+  health:
+    enabled: true
+    sensitive: false
+  info:
+    enabled: true
+    sensitive: false
+
+logger:
+  levels:
+    com.example: DEBUG
+    io.micronaut: INFO

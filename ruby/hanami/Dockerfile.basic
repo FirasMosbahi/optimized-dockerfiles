@@ -1,0 +1,16 @@
+# ==============================================================================
+# Basic (Non-Optimized) Dockerfile
+# ==============================================================================
+FROM ruby:3.3.0
+
+WORKDIR /app
+
+# Copy everything
+COPY . .
+
+# Install gems
+RUN bundle install
+
+EXPOSE 2300
+
+CMD ["bundle", "exec", "rackup", "-p", "2300"]
