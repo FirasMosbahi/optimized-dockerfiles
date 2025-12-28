@@ -1,0 +1,27 @@
+# Dockerfile.basic (non-optimized)
+FROM python:3.14-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files
+COPY pyproject.toml poetry.lock* ./
+COPY src ./src
+
+# Install Poetry
+RUN pip install --no-cache-dir poetry
+
+# Install dependencies
+RUN poetry install --no-root --no-interaction --no-ansi
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=django_demo.settings
+ENV PYTHONPATH=/app/src
+
+# Expose port
+EXPOSE 8000
+
+# Run migrations and start development server
+CMD cd src && poetry run python manage.py migrate --noinput && \
+    poetry run python manage.py runserver 0.0.0.0:8000

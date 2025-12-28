@@ -1,0 +1,26 @@
+# Dockerfile.basic (non-optimized)
+FROM python:3.14-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files
+COPY pyproject.toml poetry.lock* ./
+COPY src ./src
+
+# Install Poetry
+RUN pip install --no-cache-dir poetry
+
+# Install dependencies
+RUN poetry install --no-root --no-interaction --no-ansi
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_APP=flask_demo.wsgi:app
+ENV FLASK_ENV=development
+
+# Expose port
+EXPOSE 5000
+
+# Run app with Flask development server
+CMD ["poetry", "run", "flask", "run", "--host", "0.0.0.0", "--port", "5000"]

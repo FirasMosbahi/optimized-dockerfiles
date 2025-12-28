@@ -1,0 +1,170 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'javascript/**'
+      - 'python/**'
+      - '!**.md'
+  workflow_dispatch:
+    inputs:
+      framework:
+        description: 'Framework to build (e.g., javascript/react, python/flask)'
+        required: false
+        type: string
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      frameworks: ${{ steps.filter.outputs.changes }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Detect changed frameworks
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            javascript-react:
+              - 'javascript/react/**'
+            javascript-nextjs:
+              - 'javascript/nextjs/**'
+            javascript-angular:
+              - 'javascript/angular/**'
+            javascript-vue:
+              - 'javascript/vue/**'
+            javascript-svelte:
+              - 'javascript/svelte/**'
+            python-fastapi:
+              - 'python/fastapi/**'
+            python-flask:
+              - 'python/flask/**'
+            python-django:
+              - 'python/django/**'
+            python-streamlit:
+              - 'python/streamlit/**'
+
+  build-and-push:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    if: needs.detect-changes.outputs.frameworks != '[]'
+    strategy:
+      matrix:
+        framework: ${{ fromJSON(needs.detect-changes.outputs.frameworks) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set framework variables
+        id: vars
+        run: |
+          # Convert framework name (e.g., "javascript-react") to path and tag
+          FRAMEWORK="${{ matrix.framework }}"
+          LANGUAGE=$(echo $FRAMEWORK | cut -d'-' -f1)
+          NAME=$(echo $FRAMEWORK | cut -d'-' -f2)
+
+          echo "language=$LANGUAGE" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+          echo "path=$LANGUAGE/$NAME" >> $GITHUB_OUTPUT
+          echo "tag=$NAME" >> $GITHUB_OUTPUT
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push optimized image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ steps.vars.outputs.path }}
+          file: ./${{ steps.vars.outputs.path }}/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-latest
+          cache-to: type=inline
+
+      - name: Build and push basic image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ steps.vars.outputs.path }}
+          file: ./${{ steps.vars.outputs.path }}/Dockerfile.basic
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-basic-latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-basic-${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-basic-latest
+          cache-to: type=inline
+
+      - name: Build summary
+        run: |
+          echo "### ✅ Successfully built ${{ steps.vars.outputs.name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Framework:** ${{ steps.vars.outputs.name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Language:** ${{ steps.vars.outputs.language }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Path:** ${{ steps.vars.outputs.path }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Images pushed:**" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "- \`${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.tag }}-basic-latest\`" >> $GITHUB_STEP_SUMMARY
+
+  manual-build:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.framework != ''
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set framework variables
+        id: vars
+        run: |
+          FRAMEWORK="${{ github.event.inputs.framework }}"
+          NAME=$(basename $FRAMEWORK)
+
+          echo "path=$FRAMEWORK" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push optimized image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ steps.vars.outputs.path }}
+          file: ./${{ steps.vars.outputs.path }}/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.name }}-latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.name }}-${{ github.sha }}
+
+      - name: Build and push basic image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./${{ steps.vars.outputs.path }}
+          file: ./${{ steps.vars.outputs.path }}/Dockerfile.basic
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.name }}-basic-latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/optimized-dockerfiles:${{ steps.vars.outputs.name }}-basic-${{ github.sha }}
+
+      - name: Build summary
+        run: |
+          echo "### ✅ Manually built ${{ steps.vars.outputs.name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Framework:** ${{ steps.vars.outputs.name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Path:** ${{ steps.vars.outputs.path }}" >> $GITHUB_STEP_SUMMARY

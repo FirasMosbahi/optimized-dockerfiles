@@ -1,0 +1,14 @@
+dist
+tests
+__pycache__
+*.pyc
+.env
+.vscode
+.idea
+.DS_Store
+.envrc
+.ipynb_checkpoints
+README.md
+.gitignore
+Dockerfile
+.dockerignore

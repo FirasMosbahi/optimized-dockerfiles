@@ -20,54 +20,122 @@ The purpose is to provide learning resources and ready-to-use examples that demo
 ```txt
 optimized-dockerfiles/
 │
-├── react-vite/
-│ ├── Dockerfile -> Optimized production Dockerfile
-│ ├── Dockerfile.basic -> Non-optimized beginner Dockerfile example
-│ ├── nginx.conf -> Static server config
-│ └── README.md -> Project-specific guide
+├── javascript/              # JavaScript/TypeScript frameworks
+│   ├── react/              # React + Vite
+│   ├── nextjs/             # Next.js 15 with App Router
+│   ├── angular/            # Angular Universal (SSR)
+│   ├── vue/                # Vue 3 + Vite
+│   └── svelte/             # SvelteKit
 │
-├── node-api/ -> (upcoming)
-├── python-flask/ -> (upcoming)
-├── go-service/ -> (upcoming)
-└── ...
+├── python/                 # Python frameworks
+│   ├── fastapi/            # FastAPI (async API)
+│   ├── flask/              # Flask (lightweight web)
+│   ├── django/             # Django + DRF (full-featured)
+│   └── streamlit/          # Streamlit (data apps)
+│
+└── .github/workflows/      # CI/CD pipelines
 ```
 
-Each subfolder represents a **standalone example project**, with:
+Each framework directory contains:
 
-- An **optimized Dockerfile**
+- An **optimized Dockerfile** (multi-stage, production-ready)
 - A **basic Dockerfile** (for comparison)
-- Configuration files (Nginx, etc.)
-- A project-specific README
+- Configuration files (Nginx, Poetry, etc.)
+- A comprehensive **README.md** with benchmarks
 
 ---
 
-## 🛠️ Technologies Covered (Current & Upcoming)
+## 🚀 Quick Start
 
-# 📌 Project Progress Tracker
+Navigate to any framework directory and follow its README:
 
-| Category      | Stack / Technology                | Status         |
-|---------------|------------------------------------|----------------|
-| **Frontend**  | React + Vite                       | ✅ DONE        |
-| **Frontend**  | Next.js (App Router + SSR)         | ✅ DONE        |
-| **Frontend**  | Angular (CSR + SSR)                | ✅ DONE        |
-| **Frontend**  | Vue 3 + Vite                       | ✅ DONE        |
-| **Frontend**  | SvelteKit                          | ✅ DONE        |
-|               |                                    |                |
-| **Backend**   | Node.js (Express)                  | 🔜 Coming soon |
-| **Backend**   | Node.js (Fastify)                  | 🔜 Coming soon |
-| **Backend**   | Go (Fiber / Gin)                   | 🔜 Coming soon |
-| **Backend**   | Python (Flask)                     | 🔜 Coming soon |
-| **Backend**   | Python (FastAPI)                   | 🔜 Coming soon |
-| **Backend**   | Rust (Axum / Actix)                | 🔜 Coming soon |
-|               |                                    |                |
-| **DevOps**    | Production-grade Nginx configs      | ✅ DONE        |
-| **DevOps**    | Optimized Dockerfiles               | ✅ DONE        |
-| **DevOps**    | Non-optimized comparison builds     | ✅ DONE        |
-| **DevOps**    | CI/CD (GitHub Actions)              | 🔜 Coming soon |
-| **DevOps**    | GitHub Pages documentation site     | 🔄 In Progress |
-| **DevOps**    | Repo Logo + Badges                  | 🔄 In Progress |
-| **DevOps**    | Wiki pages (Examples & Tutorials)   | 🔄 In Progress |
+```bash
+# JavaScript frameworks
+cd javascript/react     # React + Vite SPA
+cd javascript/nextjs    # Next.js with SSR
+cd javascript/angular   # Angular Universal
+cd javascript/vue       # Vue 3 + Vite
+cd javascript/svelte    # SvelteKit
 
+# Python frameworks
+cd python/fastapi       # FastAPI async API
+cd python/flask         # Flask lightweight web
+cd python/django        # Django + DRF full-stack
+cd python/streamlit     # Streamlit data apps
+```
+
+Each directory includes instructions for building and running optimized Docker images.
+
+---
+
+## 📌 Project Progress Tracker
+
+### JavaScript/TypeScript Frameworks
+
+| Framework     | Description                      | Status     | Path                 |
+|---------------|----------------------------------|------------|----------------------|
+| **React**     | React + Vite (CSR)               | ✅ DONE    | `javascript/react/`  |
+| **Next.js**   | Next.js 15 (App Router + SSR)    | ✅ DONE    | `javascript/nextjs/` |
+| **Angular**   | Angular Universal (SSR)          | ✅ DONE    | `javascript/angular/`|
+| **Vue**       | Vue 3 + Vite (CSR)               | ✅ DONE    | `javascript/vue/`    |
+| **SvelteKit** | SvelteKit (SSR)                  | ✅ DONE    | `javascript/svelte/` |
+
+### Python Frameworks
+
+| Framework     | Description                      | Status     | Path                 |
+|---------------|----------------------------------|------------|----------------------|
+| **FastAPI**   | Modern async API framework       | ✅ DONE    | `python/fastapi/`    |
+| **Flask**     | Lightweight web framework        | ✅ DONE    | `python/flask/`      |
+| **Django**    | Full-featured + DRF              | ✅ DONE    | `python/django/`     |
+| **Streamlit** | Data apps & dashboards           | ✅ DONE    | `python/streamlit/`  |
+
+### Coming Soon
+
+| Language      | Frameworks/Tools                 | Status     |
+|---------------|----------------------------------|------------|
+| **Node.js**   | Express, Fastify                 | 🔜 Planned |
+| **Go**        | Fiber, Gin                       | 🔜 Planned |
+| **Rust**      | Axum, Actix                      | 🔜 Planned |
+
+### DevOps Features
+
+| Feature                              | Status         |
+|--------------------------------------|----------------|
+| Production-grade Nginx configs       | ✅ DONE        |
+| Multi-stage Dockerfiles              | ✅ DONE        |
+| Non-optimized comparison builds      | ✅ DONE        |
+| CI/CD (GitHub Actions)               | ✅ DONE        |
+| Generic workflow with smart detection| ✅ DONE        |
+| Parallel builds with caching         | ✅ DONE        |
+| GitHub Pages documentation site      | 🔄 In Progress |
+
+---
+
+## 🔄 CI/CD Pipeline
+
+This repository uses a **single, generic GitHub Actions workflow** that:
+
+✅ Automatically detects which frameworks changed
+✅ Builds only the affected frameworks (efficient)
+✅ Runs builds in parallel when multiple frameworks change
+✅ Pushes to Docker Hub with proper tagging
+✅ Uses layer caching for faster builds
+✅ Supports manual builds via workflow dispatch
+
+**Workflow documentation:** [`.github/WORKFLOW.md`](.github/WORKFLOW.md)
+
+### Docker Images
+
+All images are pushed to Docker Hub:
+```
+<username>/optimized-dockerfiles:<framework>-latest
+<username>/optimized-dockerfiles:<framework>-basic-latest
+```
+
+**Examples:**
+- `optimized-dockerfiles:react-latest` (optimized build)
+- `optimized-dockerfiles:react-basic-latest` (non-optimized build)
+- `optimized-dockerfiles:django-latest` (optimized build)
 
 ---
 

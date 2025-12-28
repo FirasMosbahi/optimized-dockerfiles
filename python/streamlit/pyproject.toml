@@ -1,0 +1,30 @@
+[project]
+name = "streamlit-demo"
+version = "0.1.0"
+description = "Streamlit Demo Application with Optimized Docker Setup"
+authors = [
+    {name = "Firas Mosbehi", email = "firas.mosbehi@insat.ucar.tn"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "streamlit>=1.42.0,<2.0.0",
+    "pandas>=2.3.0,<3.0.0",
+    "plotly>=6.0.0,<7.0.0",
+    "python-dotenv>=1.2.1,<2.0.0"
+]
+
+[tool.poetry]
+packages = [{include = "streamlit_demo", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "black>=25.11.0,<26.0.0",
+    "isort>=7.0.0,<8.0.0",
+    "mypy>=1.19.0,<2.0.0",
+    "pytest>=9.0.2,<10.0.0"
+]

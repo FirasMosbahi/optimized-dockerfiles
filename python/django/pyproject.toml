@@ -1,0 +1,34 @@
+[project]
+name = "django-demo"
+version = "0.1.0"
+description = "Django Demo Application with DRF and Optimized Docker Setup"
+authors = [
+    {name = "Firas Mosbehi", email = "firas.mosbehi@insat.ucar.tn"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=5.2.1,<6.0.0",
+    "djangorestframework>=3.15.2,<4.0.0",
+    "python-dotenv>=1.2.1,<2.0.0",
+    "gunicorn>=23.0.0,<24.0.0",
+    "psycopg2-binary>=2.9.10,<3.0.0",
+    "django-cors-headers>=4.6.0,<5.0.0"
+]
+
+[tool.poetry]
+packages = [{include = "django_demo", from = "src"}, {include = "api", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "black>=25.11.0,<26.0.0",
+    "isort>=7.0.0,<8.0.0",
+    "mypy>=1.19.0,<2.0.0",
+    "pytest>=9.0.2,<10.0.0",
+    "pytest-django>=4.10.0,<5.0.0",
+    "django-stubs>=5.2.0,<6.0.0"
+]
